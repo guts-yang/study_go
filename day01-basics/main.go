@@ -16,4 +16,6 @@ func main() {
 	// variables.go 中定义的函数。Go 同一目录下、同一 package 的文件会被一起编译。
 	demoVariables()
 	demoControlFlow()
+	println("-----------------------------")
+	demoArray()
 }

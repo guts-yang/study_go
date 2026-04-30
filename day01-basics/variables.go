@@ -26,7 +26,7 @@ func demoVariables() {
 
 // demoControlFlow 演示 if、for、switch。
 func demoControlFlow() {
-	score := 88
+	score := 66
 
 	// if 的条件不需要括号，但代码块的大括号必须存在。
 	if score >= 90 {
@@ -54,4 +54,11 @@ func demoControlFlow() {
 	default:
 		fmt.Println("normal day")
 	}
+}
+
+func demoArray() {
+	// var numbers [5]int // 数组长度是类型的一部分，不能改变。
+	var strings = [3]string{"Go", "Python", "Java"}
+	// strings := [3]string{"Go", "Python", "Java"}  // 也可以用 := 声明数组，但需要显式指定长度。
+	fmt.Println(strings)
 }
