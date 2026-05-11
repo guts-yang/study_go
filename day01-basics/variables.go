@@ -46,7 +46,7 @@ func demoControlFlow() {
 
 	// switch 默认自带 break，不会像 C/Java 那样自动 fallthrough。
 	// 这减少了隐式控制流带来的 bug。
-	switch day := "Monday"; day {
+	switch day := "Tuesday"; day {
 	case "Monday":
 		fmt.Println("start of week")
 	case "Friday":
@@ -61,4 +61,9 @@ func demoArray() {
 	var strings = [3]string{"Go", "Python", "Java"}
 	// strings := [3]string{"Go", "Python", "Java"}  // 也可以用 := 声明数组，但需要显式指定长度。
 	fmt.Println(strings)
+}
+
+func demoSlice(i int) {
+	// 简单案例
+	println(i)
 }

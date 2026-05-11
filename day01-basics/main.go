@@ -18,4 +18,10 @@ func main() {
 	demoControlFlow()
 	println("-----------------------------")
 	demoArray()
+	println("-----------------------------")
+	for i := 0; i < 5; i++ {
+
+		demoSlice(i)
+
+	}
 }
