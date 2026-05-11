@@ -17,7 +17,7 @@ func demoSliceGrowth() {
 
 	// make([]int, 0, 2) 创建长度为 0、容量为 2 的切片。
 	// 长度 len 表示当前可访问元素数；容量 cap 表示从起点到底层数组末尾还能容纳多少元素。
-	nums := make([]int, 0, 2)
+	nums := make([]int, 0, 10)
 
 	for i := 1; i <= 8; i++ {
 		nums = append(nums, i)
@@ -52,6 +52,10 @@ func demoSliceSharing() {
 	clone[0] = "CLONE"
 	fmt.Println("origin unchanged by clone:", origin)
 	fmt.Println("clone:", clone)
+	clonend := make([]string, len(origin))
+	copy(clonend, origin)
+	fmt.Println("origin unchanged by clonend:", origin)
+	fmt.Println("clonend:", clonend)
 }
 
 func demoMapPitfalls() {
@@ -78,7 +82,11 @@ func demoMapPitfalls() {
 		// 这能避免开发者无意依赖哈希表内部实现。
 		fmt.Printf("%s => %d\n", name, s)
 	}
-
+	city := make(map[string]string)
+	city["城市"] = "北京"
+	city["城市2"] = "上海"
+	cityVal, ok2 := city["城市1"]
+	fmt.Printf("value=%s exists=%t\n", cityVal, ok2)
 	// 并发提醒：
 	// 普通 map 不支持并发读写。多个 goroutine 同时写 map 会导致 fatal error。
 	// 工程上可选 sync.Mutex 保护 map，或使用 sync.Map 处理特定高并发读多写少场景。
