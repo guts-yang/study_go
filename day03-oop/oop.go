@@ -25,6 +25,10 @@ func (u *User) ChangeAge(age int) {
 	u.Age = age
 }
 
+func (u *User) ChangeEmail(email string) {
+	u.Email = email
+}
+
 // IsAdult 使用值接收者。
 // 原理：值接收者会拷贝一份 User，适合只读、小对象、不可变语义的方法。
 func (u User) IsAdult() bool {
@@ -63,6 +67,16 @@ func main() {
 	// 由于 User 是匿名字段，可以直接访问 admin.Name，也可以显式写 admin.User.Name。
 	admin.Rename("Super Admin")
 	fmt.Printf("admin name=%s level=%d createdBy=%s\n", admin.Name, admin.Level, admin.CreatedBy)
+
+	manager := Manager{
+		User:       User{ID: 3, Name: "Bob", Age: 25},
+		Department: "Sales",
+	}
+	// 字段提升
+	// manager.Age = 30
+	// 方法提升
+	manager.Rename("Bob Wang")
+	fmt.Printf("manager name=%s dept=%s Age=%d\n", manager.Name, manager.Department, manager.Age)
 
 	// Go 的设计哲学：
 	// - 不提供传统继承，避免复杂的层级关系。
