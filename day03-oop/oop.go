@@ -8,15 +8,21 @@ import "fmt"
 // 3. 理解组合优于继承的 Go 风格。
 
 type User struct {
-	ID   int
-	Name string
-	Age  int
+	ID    int
+	Name  string
+	Age   int
+	Email string
 }
 
 // Rename 使用指针接收者。
 // 原理：方法接收者本质上也是参数。指针接收者传入的是地址，可以修改原对象。
 func (u *User) Rename(name string) {
 	u.Name = name
+}
+
+// 需要修改值对象
+func (u *User) ChangeAge(age int) {
+	u.Age = age
 }
 
 // IsAdult 使用值接收者。
@@ -35,10 +41,16 @@ type Admin struct {
 	Level     int
 }
 
+type Manager struct {
+	User
+	Department string
+}
+
 func main() {
 	user := User{ID: 1, Name: "Alice", Age: 20}
 	fmt.Printf("before rename: %+v\n", user)
 
+	user.ChangeAge(25)
 	user.Rename("Alice Zhang")
 	fmt.Printf("after rename: %+v adult=%t\n", user, user.IsAdult())
 
