@@ -14,6 +14,7 @@ func main() {
 	demoGoroutineAndChannel()
 	demoBufferedChannel()
 	demoSelectTimeout()
+	demodoubleroutine()
 }
 
 func demoGoroutineAndChannel() {
@@ -69,9 +70,22 @@ func demoSelectTimeout() {
 	select {
 	case v := <-result:
 		fmt.Println("got:", v)
-	case <-time.After(100 * time.Millisecond):
+	case <-time.After(400 * time.Millisecond):
 		// select 会等待多个 channel 操作中最先就绪的一个。
 		// time.After 返回一个只读 channel，到时间后发送当前时间，常用于超时控制。
 		fmt.Println("timeout")
 	}
+}
+
+func demodoubleroutine() {
+	ch := make(chan int)
+
+	go func() {
+		ch <- 1
+	}()
+	go func() {
+		ch <- 2
+	}()
+	msg := <-ch
+	fmt.Println("receive:", msg)
 }
