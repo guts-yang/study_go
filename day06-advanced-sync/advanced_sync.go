@@ -35,6 +35,7 @@ func CountConcurrently(workers int, timesPerWorker int) int {
 	counter := &SafeCounter{}
 
 	for i := 0; i < workers; i++ {
+
 		wg.Add(1)
 		go func() {
 			defer wg.Done()
@@ -51,7 +52,7 @@ func CountConcurrently(workers int, timesPerWorker int) int {
 
 func FetchWithContext(ctx context.Context) error {
 	select {
-	case <-time.After(200 * time.Millisecond):
+	case <-time.After(10 * time.Millisecond):
 		fmt.Println("fetch success")
 		return nil
 	case <-ctx.Done():
@@ -62,7 +63,7 @@ func FetchWithContext(ctx context.Context) error {
 }
 
 func main() {
-	total := CountConcurrently(5, 1000)
+	total := CountConcurrently(100, 1000)
 	fmt.Println("counter =", total)
 
 	ctx, cancel := context.WithTimeout(context.Background(), 100*time.Millisecond)
