@@ -15,7 +15,7 @@ import (
 // 3. 使用 JSON、路由、超时配置搭出一个接近真实后端服务的雏形。
 
 type User struct {
-	ID        int       `json:"id"`
+	ID        int       `json:"id"` // tag
 	Name      string    `json:"name"`
 	CreatedAt time.Time `json:"created_at"`
 }

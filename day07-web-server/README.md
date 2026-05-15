@@ -43,7 +43,7 @@ curl http://localhost:8080/users
 创建用户：
 
 ```powershell
-curl -X POST http://localhost:8080/users -H "Content-Type: application/json" -d "{\"name\":\"Charlie\"}"
+Invoke-WebRequest -Uri http://localhost:8080/users -Method POST -Headers @{"Content-Type"="application/json"} -Body '{"name":"Charlie"}'
 ```
 
 查看用户详情：
