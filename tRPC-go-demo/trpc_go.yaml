@@ -1,0 +1,31 @@
+# tRPC-Go demo 服务端最简配置
+#
+# 关键字段：
+#   - global.namespace      : 命名空间，Production / Development，仅作环境隔离标识
+#   - server.app/server     : 应用 / 服务进程名，组合后形成 trpc.<app>.<server>.<service> 命名规范
+#   - server.service[].name : 服务名，必须与 ServiceDesc.ServiceName 完全一致（trpc.demo.user.User）
+#   - server.service[].ip   : 监听 IP；0.0.0.0 表示所有网卡
+#   - server.service[].port : 监听端口
+#   - server.service[].network  : tcp / udp，本 demo 用 tcp
+#   - server.service[].protocol : 业务协议；本 demo 用 trpc 私有协议
+#   - server.service[].serialization : 序列化方式；2 = JSON（与桩代码 codec.SerializationTypeJSON 一致）
+#   - server.service[].timeout       : 单次请求处理超时（毫秒）
+#
+# 注意：本配置故意不引入名字服务（polaris）、监控、日志等插件，
+#       目的是把"最小可运行 tRPC 服务"暴露出来，让你能聚焦协议本身。
+
+global:
+  namespace: Development
+  env_name: dev
+
+server:
+  app: demo
+  server: user
+  service:
+    - name: trpc.demo.user.User
+      ip: 0.0.0.0
+      port: 8000
+      network: tcp
+      protocol: trpc
+      serialization: 2
+      timeout: 2000
