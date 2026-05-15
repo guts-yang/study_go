@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package trpc.study.user;
+
+option go_package = "day05-naming-and-client/stub/trpc/study/user";
+
+// 用户服务（同 day02）
+service UserService {
+  rpc CreateUser(CreateUserReq) returns (CreateUserRsp);
+  rpc GetUser   (GetUserReq)    returns (GetUserRsp);
+}
+
+// 网关服务（本 day 新增）：演示在服务端 handler 里调下游 UserService。
+service GatewayService {
+  rpc GreetUser(GreetUserReq) returns (GreetUserRsp);
+}
+
+message User {
+  uint64 id         = 1;
+  string name       = 2;
+  int64  created_at = 3;
+}
+
+message CreateUserReq { string name = 1; }
+message CreateUserRsp { User   user = 1; }
+message GetUserReq    { uint64 id   = 1; }
+message GetUserRsp    { User   user = 1; }
+
+message GreetUserReq  { uint64 id = 1; }
+message GreetUserRsp  { string greeting = 1; }

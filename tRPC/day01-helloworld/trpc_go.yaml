@@ -1,0 +1,24 @@
+# Day1 最小化服务端配置。
+# 字段含义详见 day03-config-and-admin 的 README，本文件仅展示"能跑起来的最小集合"。
+
+global:
+  namespace: Development            # 环境隔离：Development / Production
+  env_name: local                   # 子环境名（同一 namespace 下可再划分）
+
+server:
+  app: study                        # 应用名，与监控/日志聚合维度强相关
+  server: helloworld                # 服务名（一个进程一个 server 名）
+  service:
+    - name: trpc.helloworld.Greeter # 必须与 proto 中的 package + service 拼起来一致
+      ip: 127.0.0.1
+      port: 8000
+      network: tcp                  # tcp / udp / unix
+      protocol: trpc                # tRPC 私有协议；day06 会换成 http
+      timeout: 1000                 # 单次请求服务端处理超时，单位毫秒
+
+plugins:
+  log:
+    default:                        # 默认 logger 名，业务代码 log.Infof 走这里
+      - writer: console
+        level: debug
+        formatter: console          # 控制台彩色友好；线上用 json

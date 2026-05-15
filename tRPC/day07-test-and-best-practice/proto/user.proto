@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package trpc.study.user;
+
+option go_package = "day07-test-and-best-practice/stub/trpc/study/user";
+
+service UserService {
+  rpc CreateUser(CreateUserReq) returns (CreateUserRsp);
+  rpc GetUser   (GetUserReq)    returns (GetUserRsp);
+}
+
+message User {
+  uint64 id         = 1;
+  string name       = 2;
+  int64  created_at = 3;
+}
+
+message CreateUserReq { string name = 1; }
+message CreateUserRsp { User   user = 1; }
+message GetUserReq    { uint64 id   = 1; }
+message GetUserRsp    { User   user = 1; }

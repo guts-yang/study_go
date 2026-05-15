@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package trpc.helloworld;
+
+option go_package = "day01-helloworld/stub/trpc/helloworld";
+
+// Greeter 是最经典的入门 RPC 服务，对应官方 examples/helloworld。
+service Greeter {
+  // SayHello 接收一段文本，返回带 "Hello, " 前缀的回复。
+  rpc SayHello(HelloRequest) returns (HelloReply);
+}
+
+message HelloRequest {
+  string msg = 1; // 调用方要被问候的内容
+}
+
+message HelloReply {
+  string msg = 1; // 服务端拼接好的问候语
+}

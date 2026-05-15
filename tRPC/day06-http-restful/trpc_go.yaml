@@ -1,0 +1,29 @@
+global:
+  namespace: Development
+  env_name: local
+
+server:
+  app: study
+  server: userservice
+  service:
+    # tRPC 私有协议端口
+    - name: trpc.study.user.UserService
+      ip: 127.0.0.1
+      port: 8001
+      network: tcp
+      protocol: trpc
+      timeout: 1000
+    # HTTP/RESTful 端口：同一份业务实现，额外暴露 HTTP 接口
+    - name: trpc.study.user.UserService
+      ip: 127.0.0.1
+      port: 8080
+      network: tcp
+      protocol: http
+      timeout: 1000
+
+plugins:
+  log:
+    default:
+      - writer: console
+        level: debug
+        formatter: console

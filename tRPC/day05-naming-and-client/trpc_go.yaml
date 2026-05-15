@@ -1,0 +1,42 @@
+global:
+  namespace: Development
+
+server:
+  app: study
+  server: gateway
+  filter:
+    - recovery
+  service:
+    # 同一份 yaml 同时启动两个 service：一个 User 一个 Gateway
+    # 实际生产中两者一般在不同进程；这里为了演示放在同一个 go run 里
+    - name: trpc.study.user.UserService
+      ip: 127.0.0.1
+      port: 8001
+      network: tcp
+      protocol: trpc
+      timeout: 1000
+
+    - name: trpc.study.user.GatewayService
+      ip: 127.0.0.1
+      port: 8002
+      network: tcp
+      protocol: trpc
+      timeout: 1500          # Gateway 整体超时 > 它给下游的 500ms
+
+# 也可以把 callee 配置在这里，业务代码里 NewUserServiceClientProxy() 不传 WithTarget 就会自动从这里查
+client:
+  timeout: 1000
+  namespace: Development
+  service:
+    - callee: trpc.study.user.UserService
+      target: example://trpc.study.user.UserService
+      network: tcp
+      protocol: trpc
+      timeout: 500
+
+plugins:
+  log:
+    default:
+      - writer: console
+        level: debug
+        formatter: console

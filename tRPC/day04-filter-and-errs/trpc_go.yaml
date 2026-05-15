@@ -1,0 +1,27 @@
+global:
+  namespace: Development
+  env_name: local
+
+server:
+  app: study
+  server: userservice
+  # 服务端全局 filter 链：recovery 在最外层，auth 在内层
+  # 执行顺序（请求方向）：recovery → auth → handler
+  # 执行顺序（响应方向）：handler → auth → recovery
+  filter:
+    - recovery
+    - auth
+  service:
+    - name: trpc.study.user.UserService
+      ip: 127.0.0.1
+      port: 8001
+      network: tcp
+      protocol: trpc
+      timeout: 1000
+
+plugins:
+  log:
+    default:
+      - writer: console
+        level: debug
+        formatter: console

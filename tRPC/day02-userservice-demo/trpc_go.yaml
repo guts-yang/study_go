@@ -1,0 +1,21 @@
+global:
+  namespace: Development
+  env_name: local
+
+server:
+  app: study
+  server: userservice
+  service:
+    - name: trpc.study.user.UserService
+      ip: 127.0.0.1
+      port: 8001
+      network: tcp
+      protocol: trpc
+      timeout: 1000
+
+plugins:
+  log:
+    default:
+      - writer: console
+        level: debug
+        formatter: console

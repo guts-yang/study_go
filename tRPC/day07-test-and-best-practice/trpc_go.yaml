@@ -1,0 +1,46 @@
+global:
+  namespace: Production
+  env_name: prod-shenzhen
+
+server:
+  app: study
+  server: user
+  filter:
+    - recovery
+  admin:
+    ip: 127.0.0.1                  # 生产强制内网
+    port: 11014
+  service:
+    - name: trpc.study.user.UserService
+      ip: 127.0.0.1
+      port: 8001
+      network: tcp
+      protocol: trpc
+      timeout: 1000
+
+client:
+  timeout: 1000
+  namespace: Production
+  filter:
+    - degrade                      # 客户端降级 filter（示例占位）
+
+plugins:
+  log:
+    default:
+      - writer: console
+        level: info                # 生产线默认 info；debug 仅排障时打开
+        formatter: json            # 生产线一律 json，便于 ELK 摄取
+      - writer: file
+        level: warn
+        formatter: json
+        writer_config:
+          log_path: ./log/user.log
+          max_size: 100
+          max_backups: 30
+          max_age: 30
+          compress: true
+  metrics:
+    prometheus:                    # admin /metrics 默认走 prometheus 格式
+      ip: 127.0.0.1
+      port: 12017
+      path: /metrics

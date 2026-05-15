@@ -1,0 +1,37 @@
+global:
+  namespace: Development
+  env_name: local
+
+server:
+  app: study
+  server: userservice
+  # admin 端口：暴露 /is_healthy、/cmds、/version 等接口
+  # 生产环境建议绑定内网 IP，避免外网直接访问
+  admin:
+    ip: 127.0.0.1
+    port: 11014
+  service:
+    - name: trpc.study.user.UserService
+      ip: 127.0.0.1
+      port: 8001
+      network: tcp
+      protocol: trpc
+      timeout: 1000
+
+plugins:
+  log:
+    default:
+      # 控制台 logger（开发阶段）
+      - writer: console
+        level: debug
+        formatter: console   # 彩色、可读；线上换 json
+      # 文件 logger（演示多输出）
+      - writer: file
+        level: info
+        formatter: json
+        writer_config:
+          log_path: ./log/user.log
+          max_size: 10         # MB
+          max_backups: 5
+          max_age: 7
+          compress: false
